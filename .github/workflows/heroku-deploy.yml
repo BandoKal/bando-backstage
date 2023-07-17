@@ -1,0 +1,46 @@
+# This workflow deploys the source to heroku
+#
+# Overview
+#
+# 1. Checkout the repository
+# 2. Host build with yarn
+# 3. Build docker image
+# 4. Push docker image to heroku registry
+# 5. Release docker image to heroku
+
+name: Deploy to Heroku
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+  POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+  POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+  POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+  POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+
+jobs:
+    build-deploy:
+        name: Build Host
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Login
+              run: heroku container:login
+
+            - name: Build
+              run: |
+                  yarn install --frozen-lockfile
+                  yarn tsc
+                  yarn build:backend --config ../../app-config.production.yaml
+
+            - name: Deploy
+              run: |
+                  docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
+                  docker push registry.heroku.com/$HEROKU_APP_NAME/web
+                  heroku container:release web --app $HEROKU_APP_NAME
