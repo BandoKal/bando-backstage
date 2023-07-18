@@ -21,7 +21,7 @@ backend:
   # config options: https://node-postgres.com/api/client
   database:
     client: pg
-    connection: ${DATABASE_URL}
+    connection: ${DATABASE_URL}?sslmode=require
     connectionOptions:
       ssl:
         rejectUnauthorized: false
