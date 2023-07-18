@@ -28,6 +28,7 @@ jobs:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          DOCKER_BUILDKIT: 1
         steps:
             - name: Checkout
               uses: actions/checkout@v2
