@@ -22,6 +22,9 @@ backend:
   database:
     client: pg
     connection: ${DATABASE_URL}?sslmode=require
+    connectionOptions:
+      ssl:
+        rejectUnauthorized: false
       
 
 catalog:
