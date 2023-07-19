@@ -22,8 +22,14 @@ backend:
   database:
     client: pg
     ensureExists: true
-    pluginDivisionMode: 'schema'
+    usePluginSchemas: true
+    ssl: true
     connection: ${DATABASE_URL}?sslmode=require
+    plugin:
+      auth:
+        database: ${DATABASE_URL}
+      catalog:
+        database: ${DATABASE_URL}
     
       
 
