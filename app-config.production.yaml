@@ -6,11 +6,6 @@ app:
   organization:
     name: Bandokal
 backend:
-  # Note that the baseUrl should be the URL that the browser and other clients
-  # should use when communicating with the backend, i.e. it needs to be
-  # reachable not just from within the backend host, but from all of your
-  # callers. When its value is "http://localhost:7007", it's strictly private
-  # and can't be reached by others.
   baseUrl: https://${HEROKU_APP_NAME}.herokuapp.com
   # The listener can also be expressed as a single <host>:<port> string. In this case we bind to
   # all interfaces, the most permissive setting. The right value depends on your specific deployment.
@@ -18,7 +13,9 @@ backend:
     port: 
       $env: PORT
 
-  # config options: https://node-postgres.com/api/client
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+
   database:
     client: pg
     connection:
@@ -26,8 +23,14 @@ backend:
       port: ${DATABASE_PORT}
       user: ${DATABASE_USER}
       password: ${DATABASE_PASSWORD}
-      
 
+techdocs:
+  builder: 'local' # Alternatives - 'external'
+  generator:
+    runIn: 'local' # Alternatives - 'local'
+  publisher:
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+    
 catalog:
   # Overrides the default list locations from app-config.yaml as these contain example data.
   # See https://backstage.io/docs/features/software-catalog/#adding-components-to-the-catalog for more details
