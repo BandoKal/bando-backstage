@@ -21,7 +21,7 @@ backend:
   # config options: https://node-postgres.com/api/client
   database:
     client: pg
-    ensureExists: false
+    ensureExists: true
     pluginDivisionMode: 'schema'
     connection: ${DATABASE_URL}
     connectionOptions:
