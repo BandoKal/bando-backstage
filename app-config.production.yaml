@@ -21,16 +21,11 @@ backend:
   # config options: https://node-postgres.com/api/client
   database:
     client: pg
-    ensureExists: true
-    usePluginSchemas: true
-    ssl: true
-    connection: ${DATABASE_URL}?sslmode=require
-    plugin:
-      auth:
-        database: ${DATABASE_URL}
-      catalog:
-        database: ${DATABASE_URL}
-    
+    connection:
+      host: ${DATABASE_HOST}
+      port: ${DATABASE_PORT}
+      user: ${DATABASE_USER}
+      password: ${DATABASE_PASSWORD}
       
 
 catalog:
