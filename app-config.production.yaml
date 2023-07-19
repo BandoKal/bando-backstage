@@ -23,10 +23,8 @@ backend:
     client: pg
     ensureExists: true
     pluginDivisionMode: 'schema'
-    connection: ${DATABASE_URL}
-    connectionOptions:
-      ssl:
-        rejectUnauthorized: false
+    connection: ${DATABASE_URL}?sslmode=require
+    
       
 
 catalog:
