@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { RandomJokeHomePageComponent } from './RandomJokeHomePageComponent';
+import { RandomJokeHomePageComponent } from './src/homePageComponents/RandomJoke/RandomJokeHomePageComponent';
 
 export const homePage = (
     <Grid container spacing={3}>
