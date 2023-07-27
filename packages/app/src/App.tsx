@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import {
   CatalogEntityPage,
@@ -36,6 +36,7 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 
 import { HomepageCompositionRoot } from '@backstage/plugin-home';
 import { homePage } from './components/home/HomePage';
+import { XkcdPage } from 'backstage-plugin-xkcd';
 
 const app = createApp({
   apis,
@@ -61,6 +62,7 @@ const routes = (
     <Route path="/" element={<HomepageCompositionRoot />}>
       {homePage}
     </Route>;
+    {/* <Route path="/xkcd" element={<XkcdPage />} /> */}
     <Route path="/catalog" element={<CatalogIndexPage />} />
     <Route
       path="/catalog/:namespace/:kind/:name"
@@ -96,6 +98,7 @@ const routes = (
     </Route>
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
+    <Route path="/bando" element={<XkcdPage />} />
   </FlatRoutes>
 );
 

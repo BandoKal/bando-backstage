@@ -1,0 +1,1 @@
+export { substackPlugin } from './plugin';
