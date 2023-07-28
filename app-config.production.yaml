@@ -35,6 +35,10 @@ techdocs:
     runIn: 'local' # Alternatives - 'local'
   publisher:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+    
+proxy:
+  /xkcd-proxy : https://xkcd.com/
+  /substack : https://jasonbandy.substack.com/feed
 
 catalog:
   # Overrides the default list locations from app-config.yaml as these contain example data.
