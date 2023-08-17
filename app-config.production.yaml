@@ -57,10 +57,10 @@ catalog:
 
     - type: url
       target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/components/artist-lookup-component.yaml
-      
+
     # Local example template
     - type: file
-      target: ../../examples/template/template.yaml
+      target: ./templates/funraiser-website//template.yaml
       rules:
         - allow: [Template]
 

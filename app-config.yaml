@@ -84,10 +84,16 @@ catalog:
       target: ../../examples/template/template.yaml
       rules:
         - allow: [Template]
+    
+    # All templates
+    - type: file
+      target: ../../templates/funraiser-website/template.yaml
+      rules:
+        - allow: [Template]
 
     - type: url
       target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/components/artist-lookup-component.yaml
-      
+
     # Local example organizational data
     - type: file
       target: ../../examples/org.yaml

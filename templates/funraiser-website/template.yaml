@@ -1,0 +1,87 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: fundraiser-website
+  title: Fundraiser Website
+  description: Generate a new fundraiser website
+spec:
+  owner: bandokal
+  type: website
+
+  parameters:
+    - title: Fundraiser Details
+      required:
+        - location
+        - fundraiserName
+      properties:
+        location:
+          title: Location
+          type: string
+          description: Which store are you creating the fundraiser for?
+          enum: [Dickson, Laurel, Jackson, Starkville]
+        fundraiserName:
+          title: Fundraiser Name
+          type: string
+          description: What's the name of the fundraiser?
+    - title: Fundraiser Options
+      required:
+        - endDate
+        - products
+      properties:
+        endDate:
+          title: End Date
+          type: string
+          format: date
+          description: When will the fundraiser end?
+        products:
+          title: Products for Fundraiser
+          type: array
+          default: 
+            - name: Laundry Bundle
+              description: Laundry Soap, 3 Dryer Balls, Scent Booster, Wooden Scoop.
+            - name: Smooth Shave Bundle
+              description: Shave Soap, Body Scrub, Shower Oil.
+            - name: Moisturizing Body Butter Bundle
+              description: Body Butter, Moisturizing Shea Soap Bar, Silicone Soap Dish.
+            - name: Relaxing Bath Bundle
+              description: Epsom Salt, Bath Bomb, Wooden Scoop.
+            - name: Buff’s 5 Best Soap Bundle
+              description: Buff’s 5 Best-Selling Soap Bars.
+            - name: Buff’s 5 Best Bath Bomb Bundle
+              description: Buff’s 5 Best-Selling Bath Bombs.
+            - name: Single Shea Soap + Soap Sleeve
+              description: "{Narcissist | All Hail the Queen | Good Morning Sunshine | Island Nectar | Commando} Soap + Soap Sleeve."
+            - name: Custom Soap Name?
+              description: Custom description
+          items:
+            type: object
+            properties:
+              required:
+                - name
+              name:
+                title: Product Name
+                type: string
+                description: What's the name of the product?
+              description:
+                title: Product Description
+                type: string
+                description: Please specify scent if needed.
+          description: Which products will be part of this fundraiser?
+
+  steps:
+    - id: fetch-base-repo
+      name: Fetch base repo
+      action: fetch:cookiecutter
+      input:
+        url: https://github.com/BandoKal/fun-raiser.git
+
+    # ... Additional steps like modifying the template with provided details.
+
+    - id: publish-to-github
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        repoUrl: 'github.com/new-org/{{ parameters.location }}-fundraiser'
+
+  output:
+    url: '{{ steps.publish-to-github.output.remoteUrl }}'
