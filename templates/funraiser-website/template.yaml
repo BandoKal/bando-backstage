@@ -5,14 +5,17 @@ metadata:
   title: Fundraiser Website
   description: Generate a new fundraiser website
 spec:
-  owner: bandokal
+  owner: BandoKal
   type: website
-
   parameters:
     - title: Fundraiser Details
       required:
         - location
         - fundraiserName
+        - endDate
+        - fundraiserHeadline
+        - fundraiserInstructions
+        - products
       properties:
         location:
           title: Location
@@ -23,65 +26,114 @@ spec:
           title: Fundraiser Name
           type: string
           description: What's the name of the fundraiser?
-    - title: Fundraiser Options
-      required:
-        - endDate
-        - products
-      properties:
         endDate:
           title: End Date
           type: string
           format: date
           description: When will the fundraiser end?
+        fundraiserHeadline:
+          title: Headline
+          type: string
+          ui:widget: textarea
+          ui:help: 'This field is what the host would like to say to people visiting the fundraiser site. You can use emojis.'
+          ui:placeholder: This is the County High School Marching Band Fundraiser 🥁. 25% of all sales will go to the County High School Band! Thank you for the support! Go Bullfrogs! 
+        fundraiserInstructions:
+          title: Customer Instruction
+          type: string
+          ui:widget: textarea
+          ui:help: 'How do customers purchase the products? These instructions will typically be email your order to an email address.'
+          ui:placeholder: |
+            Please send your order to Ms. BandDirector <a href="mailto:host_email@example.com">host_email@example.com</a> // You can send HTML like this
+            -- OR -- 
+            Please Venmo your order to @msbanddirector with the order in the comment. Thanks you rock! 🤘 
+            -- OR -- 
+            Call Ms. BandDirector for any questions <a href="tel:11231231234">11231231234</a>
         products:
           title: Products for Fundraiser
           type: array
-          default: 
-            - name: Laundry Bundle
-              description: Laundry Soap, 3 Dryer Balls, Scent Booster, Wooden Scoop.
-            - name: Smooth Shave Bundle
-              description: Shave Soap, Body Scrub, Shower Oil.
-            - name: Moisturizing Body Butter Bundle
-              description: Body Butter, Moisturizing Shea Soap Bar, Silicone Soap Dish.
-            - name: Relaxing Bath Bundle
-              description: Epsom Salt, Bath Bomb, Wooden Scoop.
-            - name: Buff’s 5 Best Soap Bundle
-              description: Buff’s 5 Best-Selling Soap Bars.
-            - name: Buff’s 5 Best Bath Bomb Bundle
-              description: Buff’s 5 Best-Selling Bath Bombs.
-            - name: Single Shea Soap + Soap Sleeve
-              description: "{Narcissist | All Hail the Queen | Good Morning Sunshine | Island Nectar | Commando} Soap + Soap Sleeve."
-            - name: Custom Soap Name?
-              description: Custom description
+          description: Which products will be part of this fundraiser?
           items:
             type: object
             properties:
-              required:
-                - name
-              name:
+              id:
+                title: ID
+                type: number
+                ui:readonly: true
+              productName:
                 title: Product Name
                 type: string
                 description: What's the name of the product?
-              description:
+              productDescription:
                 title: Product Description
                 type: string
                 description: Please specify scent if needed.
-          description: Which products will be part of this fundraiser?
-
+              price:
+                title: Price
+                type: string
+                ui:readonly: true
+          default: 
+            - productName: Laundry Bundle
+              productDescription: Laundry Soap, 3 Dryer Balls, Scent Booster, Wooden Scoop.
+              id: 1
+              price: $50.00
+            - productName: Smooth Shave Bundle
+              productDescription: Shave Soap, Body Scrub, Shower Oil.
+              id: 2
+              price: $45.00
+            - productName: Moisturizing Body Butter Bundle
+              productDescription: Body Butter, Moisturizing Shea Soap Bar, Silicone Soap Dish.
+              id: 3
+              price: $35.00
+            - productName: Relaxing Bath Bundle
+              productDescription: Epsom Salt, Bath Bomb, Wooden Scoop.
+              id: 4
+              price: $35.00
+            - productName: Buff’s 5 Best Soap Bundle
+              productDescription: Buff’s 5 Best-Selling Soap Bars.
+              id: 5
+              price: $35.00
+            - productName: Buff’s 5 Best Bath Bomb Bundle
+              productDescription: Buff’s 5 Best-Selling Bath Bombs.
+              id: 6
+            - productName: Single Shea Soap + Soap Sleeve
+              productDescription: "{Narcissist | All Hail the Queen | Good Morning Sunshine | Island Nectar | Commando} Soap + Soap Sleeve."
+              id: 7
+              price: $15.00
+            - productName: Custom Soap Name?
+              productDescription: Custom description
+              id: 8
+              price: $10.00
+          
   steps:
-    - id: fetch-base-repo
+
+    - id: fetchBaseRepo
       name: Fetch base repo
-      action: fetch:cookiecutter
+      action: fetch:template
       input:
-        url: https://github.com/BandoKal/fun-raiser.git
+        url: https://github.com/fun-raisers/fun-raiser.git
+        copyWithoutTemplating: [.github/]
+        values:
+          location: ${{ parameters.location }}
+          fundraiserName: ${{ parameters.fundraiserName | trim }}
+          endDate: ${{ parameters.endDate }}
+          products: ${{ parameters.products | dump }}
+          fundraiserHeadline: ${{ parameters.fundraiserHeadline }}
+          fundraiserInstructions: ${{ parameters.fundraiserInstructions }}
+          fundraiserNameKebab: ${{ parameters.fundraiserName | trim | replace(" ", "-")}}
 
-    # ... Additional steps like modifying the template with provided details.
-
-    - id: publish-to-github
+    - id: publishToGithub
       name: Publish to GitHub
       action: publish:github
       input:
-        repoUrl: 'github.com/new-org/{{ parameters.location }}-fundraiser'
+        allowedHosts: ['github.com']
+        repoUrl: 'github.com?repo=${{ parameters.fundraiserName }}&owner=fun-raisers'
+        defaultBranch: main
+        repoVisibility: public
 
   output:
-    url: '{{ steps.publish-to-github.output.remoteUrl }}'
+    links:
+      - title: Fundraiser Site
+        url: 'http://fun-raisers.github.io/${{ parameters.fundraiserName | trim | replace(" ", "-")}}'
+        icon: crowdsource
+      - title: Repository
+        url: '${{ steps.publishToGithub.output.remoteUrl }}'
