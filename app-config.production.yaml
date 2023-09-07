@@ -63,6 +63,10 @@ catalog:
       target: https://github.com/fun-raisers/fun-raiser/blob/main/template.yml
       rules:
         - allow: [Template]
+    - type: file
+      target: ../../templates/funraiser-website/template.yaml
+      rules:
+        - allow: [Template]
 
     # Local example organizational data
     - type: file

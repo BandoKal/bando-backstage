@@ -36,7 +36,7 @@ spec:
           type: string
           ui:widget: textarea
           ui:help: 'This field is what the host would like to say to people visiting the fundraiser site. You can use emojis.'
-          ui:placeholder: This is the County High School Marching Band Fundraiser 🥁. 25% of all sales will go to the County High School Band! Thank you for the support! Go Bullfrogs! 
+          ui:placeholder: This is the County High School Marching Band Fundraiser 🥁. A portion of all sales will go to the County High School Band! Thank you for the support! Go Bullfrogs! 
         fundraiserInstructions:
           title: Customer Instruction
           type: string
@@ -71,6 +71,10 @@ spec:
                 title: Price
                 type: string
                 ui:readonly: true
+              # image:
+              #   title: Image File
+              #   type: string
+              #   format: data-url
           default: 
             - productName: Laundry Bundle
               productDescription: Laundry Soap, 3 Dryer Balls, Scent Booster, Wooden Scoop.
@@ -134,6 +138,6 @@ spec:
     links:
       - title: Fundraiser Site
         url: 'http://fun-raisers.github.io/${{ parameters.fundraiserName | trim | replace(" ", "-")}}'
-        icon: crowdsource
+        icon: paid
       - title: Repository
         url: '${{ steps.publishToGithub.output.remoteUrl }}'
