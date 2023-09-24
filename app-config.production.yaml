@@ -27,7 +27,8 @@ backend:
 integrations:
   github:
     - host: github.com
-      token: ${GITHUB_TOKEN}
+      apps:
+        - $include: github-app-backstage-bando-credentials.yaml
 
 techdocs:
   builder: 'local' # Alternatives - 'external'
