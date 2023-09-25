@@ -22,7 +22,6 @@ export const DenseTable = ({ tableTitle, items }: DenseTableProps) => {
   const columns: TableColumn[] = [
     { title: 'Name', field: 'name' },
     { title: 'Description', field: 'description' },
-    { title: 'Stars', field: 'stargazersCount' },
     {
       title: 'Link',
       field: 'link',
@@ -37,7 +36,6 @@ export const DenseTable = ({ tableTitle, items }: DenseTableProps) => {
     return {
       name: item.name || '',
       link: item.html_url || '',
-      stargazersCount: item.stargazers_count || 0,
       description: item.description || '',
     };
   });
@@ -52,10 +50,15 @@ export const DenseTable = ({ tableTitle, items }: DenseTableProps) => {
   );
 };
 
-export const AWSFeedComponent = () => {
+interface GithubFeedComponentProps {
+  searchKey: string;
+}
+
+export const GithubFeedComponent: React.FC<GithubFeedComponentProps> = ({ searchKey }) => {
   const config = useApi(configApiRef);
   const backendUrl = config.getString('backend.baseUrl');
-  const feedUrl = `${backendUrl}/api/aws-feed-backend/feed`;
+  console.log(`key: ${searchKey}`);
+  const feedUrl = `${backendUrl}/api/github-feed-backend/${searchKey}`;
 
   const { value, loading, error } = useAsync(async (): Promise<Repo[]> => {
 
@@ -71,7 +74,6 @@ export const AWSFeedComponent = () => {
     return data.items.map((item: Repo) => ({
       name: item.name || "",
       html_url: item.html_url || "",
-      stargazers_count: item.stargazers_count || 0,
       description: item.description || "",
     }));
   }, []);
@@ -81,6 +83,6 @@ export const AWSFeedComponent = () => {
   } else if (error) {
     return <ResponseErrorPanel error={error} />;
   }
-
-  return <DenseTable tableTitle={'Top AWS Repos'} items={value || []} />;
+  const titleKey = searchKey.toUpperCase();
+  return <DenseTable tableTitle={`Top ${titleKey} Repos`} items={value || []} />;
 };

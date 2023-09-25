@@ -13,7 +13,7 @@ export const AwsFeedPluginPage = awsFeedPluginPlugin.provide(
   createRoutableExtension({
     name: 'AwsFeedPluginPage',
     component: () =>
-      import('./components/AWSFeedComponent').then(m => m.AWSFeedComponent),
+      import('./components/AWSFeedComponent').then(m => m.GithubFeedComponent),
     mountPoint: rootRouteRef,
   }),
 );
