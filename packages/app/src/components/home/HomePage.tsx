@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { XkcdComicCard } from 'backstage-plugin-xkcd';
 import { HomePageRandomJoke } from '@backstage/plugin-home';
 import { SubstackFeedComponent } from '@internal/plugin-substack/src/components/SubstackFeedComponent';
+import { AWSFeedComponent } from '@internal/plugin-aws-feed-plugin/src/components/AWSFeedComponent';
 
 
 
@@ -12,16 +13,17 @@ export const homePage = (
     <Grid container spacing={2}>
         <Grid item xs={12}></Grid>
         <Grid item xs={12}>
-        <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h5" component="div">
                 Hey thanks for visiting my site! This is an example site built with Backstage. Which is an internal developer portal that you can build for your company.
-              </Typography>
+            </Typography>
         </Grid>
         <Grid item xs={12} sm container>
             <Grid item></Grid>
             <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs={4} md={5}>
-                <Stack spacing={2}>
-                    <HomePageRandomJoke />
+                    <Stack spacing={2}>
+                        <HomePageRandomJoke />
+                        <AWSFeedComponent />
                     </Stack>
                 </Grid>
                 <Grid item xs={8} md={7}>
@@ -30,6 +32,7 @@ export const homePage = (
                         <XkcdComicCard />
                     </Stack>
                 </Grid>
+
             </Grid>
         </Grid>
     </Grid>

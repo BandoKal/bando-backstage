@@ -32,6 +32,7 @@ import { PluginEnvironment } from './types';
 import { ServerPermissionClient } from '@backstage/plugin-permission-node';
 import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
 import substack from './plugins/substack';
+import awsFeed from './plugins/aws';
 
 function makeCreateEnv(config: Config) {
   const root = getRootLogger();
@@ -89,6 +90,7 @@ async function main() {
 
   const apiRouter = Router();
   apiRouter.use('/substack-backend', await substack());
+  apiRouter.use('/aws-feed-backend', await awsFeed());
   apiRouter.use('/catalog', await catalog(catalogEnv));
   apiRouter.use('/scaffolder', await scaffolder(scaffolderEnv));
   apiRouter.use('/auth', await auth(authEnv));

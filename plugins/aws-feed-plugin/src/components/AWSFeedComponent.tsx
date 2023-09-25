@@ -5,22 +5,24 @@ import { configApiRef, useApi } from '@backstage/core-plugin-api';
 import useAsync from 'react-use/lib/useAsync';
 
 
-type RSSItem = {
-  title: string;
-  link: string;
-  contentSnippet: string;
+type Repo = {
+  name: string;
+  html_url: string;
+  description: string;
+  stargazers_count: number;
 };
 
 type DenseTableProps = {
   tableTitle: string;
-  items: RSSItem[];
+  items: Repo[];
 };
 
 export const DenseTable = ({ tableTitle, items }: DenseTableProps) => {
 
   const columns: TableColumn[] = [
-    { title: 'Title', field: 'title' },
-    { title: 'SubTitle', field: 'contentSnippet' },
+    { title: 'Name', field: 'name' },
+    { title: 'Description', field: 'description' },
+    { title: 'Stars', field: 'stargazersCount' },
     {
       title: 'Link',
       field: 'link',
@@ -33,15 +35,16 @@ export const DenseTable = ({ tableTitle, items }: DenseTableProps) => {
 
   const data = items.map(item => {
     return {
-      title: item.title || '',
-      link: item.link || '',
-      contentSnippet: item.contentSnippet || '',
+      name: item.name || '',
+      link: item.html_url || '',
+      stargazersCount: item.stargazers_count || 0,
+      description: item.description || '',
     };
   });
 
   return (
     <Table
-      title={tableTitle || "RSS Feed"}
+      title={tableTitle || "AWS Feed"}
       options={{ search: false, paging: false }}
       columns={columns}
       data={data}
@@ -49,25 +52,27 @@ export const DenseTable = ({ tableTitle, items }: DenseTableProps) => {
   );
 };
 
-export const SubstackFeedComponent = () => {
+export const AWSFeedComponent = () => {
   const config = useApi(configApiRef);
   const backendUrl = config.getString('backend.baseUrl');
-  const feedUrl = `${backendUrl}/api/substack-backend/feed`;
+  const feedUrl = `${backendUrl}/api/aws-feed-backend/feed`;
 
-  const { value, loading, error } = useAsync(async (): Promise<RSSItem[]> => {
+  const { value, loading, error } = useAsync(async (): Promise<Repo[]> => {
 
     const response = await fetch(feedUrl, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
+
     const data = await response.json();
 
 
-    return data.items.map((item: RSSItem) => ({
-      title: item.title || "",
-      link: item.link || "",
-      contentSnippet: item.contentSnippet || ""
+    return data.items.map((item: Repo) => ({
+      name: item.name || "",
+      html_url: item.html_url || "",
+      stargazers_count: item.stargazers_count || 0,
+      description: item.description || "",
     }));
   }, []);
 
@@ -77,5 +82,5 @@ export const SubstackFeedComponent = () => {
     return <ResponseErrorPanel error={error} />;
   }
 
-  return <DenseTable tableTitle={'Jason\'s Substack'} items={value || []} />;
+  return <DenseTable tableTitle={'Top AWS Repos'} items={value || []} />;
 };
