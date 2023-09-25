@@ -9,9 +9,9 @@ export default async function createPlugin(
   const parser = new Parser();
 
   router.get('/feed', async (_, res) => {
-    console.log('BACKEND: getting feed');
+
     const feed = await parser.parseURL('https://jasonbandy.substack.com/feed');
-    console.log('BACKEND: got feed ');
+
     res.send(feed);
   });
 
