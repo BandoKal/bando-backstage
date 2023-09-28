@@ -51,7 +51,5 @@
       "prettier --write"
     ]
   },
-  "dependencies": {
-    "@octokit/rest": "^20.0.1"
-  }
+  "dependencies": {}
 }
