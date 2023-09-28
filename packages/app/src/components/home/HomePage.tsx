@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import { XkcdComicCard } from 'backstage-plugin-xkcd';
 import { HomePageRandomJoke } from '@backstage/plugin-home';
 import { SubstackFeedComponent } from '@internal/plugin-substack/src/components/SubstackFeedComponent';
-import { GithubFeedComponent } from '@internal/plugin-aws-feed-plugin/src/components/AWSFeedComponent';
+import { GithubFeedComponent } from '@internal/plugin-github-feed-plugin/src/components/GithubFeedComponent';
 
 const spacing = 2;
 

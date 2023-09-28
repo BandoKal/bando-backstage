@@ -1,0 +1,1 @@
+export { githubFeedPlugin } from './plugin';
