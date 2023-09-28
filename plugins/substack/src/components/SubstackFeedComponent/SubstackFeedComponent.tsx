@@ -3,7 +3,7 @@ import React from 'react';
 import { Table, TableColumn, Progress, ResponseErrorPanel } from '@backstage/core-components';
 import { configApiRef, useApi } from '@backstage/core-plugin-api';
 import useAsync from 'react-use/lib/useAsync';
-
+import { v4 as uuidv4 } from 'uuid';
 
 type RSSItem = {
   title: string;
@@ -33,6 +33,7 @@ export const DenseTable = ({ tableTitle, items }: DenseTableProps) => {
 
   const data = items.map(item => {
     return {
+      id: uuidv4(),
       title: item.title || '',
       link: item.link || '',
       contentSnippet: item.contentSnippet || '',
