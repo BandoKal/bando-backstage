@@ -1,1 +1,1 @@
-export { githubFeedPlugin, GithubFeedPage } from './plugin';
+export { githubFeedPlugin } from './plugin';

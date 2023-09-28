@@ -37,7 +37,6 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 import { HomepageCompositionRoot } from '@backstage/plugin-home';
 import { homePage } from './components/home/HomePage';
 import { XkcdPage } from 'backstage-plugin-xkcd';
-import { GithubFeedPage } from '@internal/plugin-github-feed';
 
 const app = createApp({
   apis,
@@ -100,7 +99,6 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/bando" element={<XkcdPage />} />
-    <Route path="/github-feed" element={<GithubFeedPage />} />
   </FlatRoutes>
 );
 
