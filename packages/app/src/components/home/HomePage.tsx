@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import { XkcdComicCard } from 'backstage-plugin-xkcd';
 import { HomePageRandomJoke } from '@backstage/plugin-home';
 import { SubstackFeedComponent } from '@internal/plugin-substack/src/components/SubstackFeedComponent';
-import { GithubFeedComponent } from '@internal/plugin-aws-feed-plugin/src/components/AWSFeedComponent';
+// import { GithubFeedComponent } from '@internal/plugin-aws-feed-plugin/src/components/AWSFeedComponent';
 
 const spacing = 2;
 
@@ -21,9 +21,9 @@ export const homePage = (
         <Grid container xs spacing={spacing}>
             <Grid item xs={6} md={8}>
                 <Stack spacing={spacing} paddingLeft={spacing}>
-                    <GithubFeedComponent searchKey="aws" />
+                    {/* <GithubFeedComponent searchKey="aws" />
                     <GithubFeedComponent searchKey="azure" />
-                    <GithubFeedComponent searchKey="gcp" />
+                    <GithubFeedComponent searchKey="gcp" /> */}
                 </Stack>
             </Grid>
             <Grid item xs={6} md={4} spacing={spacing}>
