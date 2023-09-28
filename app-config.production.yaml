@@ -28,7 +28,12 @@ integrations:
   github:
     - host: github.com
       apps:
-        - $include: github-app-backstage-bando-credentials.yaml
+        - appId: ${GITHUB_APP_ID} 
+          webhookUrl: ${GITHUB_WEBHOOK_URL} 
+          clientId: ${GITHUB_CLIENT_ID} 
+          clientSecret: ${GITHUB_CLIENT_SECRET} 
+          webhookSecret: ${GITHUB_WEBHOOK_SECRET} 
+          privateKey: ${GITHUB_KEY}
 
 techdocs:
   builder: 'local' # Alternatives - 'external'
