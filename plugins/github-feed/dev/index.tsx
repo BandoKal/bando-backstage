@@ -1,11 +1,13 @@
 import React from 'react';
 import { createDevApp } from '@backstage/dev-utils';
-import { githubFeedPlugin, GithubFeedPage } from '../src/plugin';
+import { githubFeedPlugin } from '../src/plugin';
+import { GithubFeedComponent } from '@internal/plugin-github-feed/src/components/GithubFeedComponent';
+
 
 createDevApp()
   .registerPlugin(githubFeedPlugin)
   .addPage({
-    element: <GithubFeedPage />,
+    element: <GithubFeedComponent searchKey='aws' />,
     title: 'Root Page',
     path: '/github-feed'
   })
